@@ -1,0 +1,120 @@
+﻿@model BookManagementSystem.Core.Modal.AdminLogin
+@{
+    ViewData["Title"] = "Login";
+}
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}
+<link href="~/css/Login.css" rel="stylesheet" />
+@if (TempData["LogoutAlert"] != null)
+{
+    <script>
+        alert("@Html.Raw(@TempData["LogoutAlert"].ToString())");
+    </script>
+
+}
+@if (TempData["LoginAlert"] != null)
+{
+    <script>
+        alert("@Html.Raw(@TempData["LoginAlert"].ToString())");
+    </script>
+
+}
+
+<link href="~/css/Login.css" rel="stylesheet" />
+
+<div class="container">
+    <div class="contain">
+        <div class="main">
+            <p class="sign" align="center">Log in</p>
+            @using (Html.BeginForm("Login1", "Book", FormMethod.Post, new { @id = "formDetails", @autocomplete = "off" }))
+            {
+                <div class="form1">
+                    <div class="form-group">
+                        @Html.EditorFor(Modal => Modal.Username, new
+                        {
+                            HtmlAttributes = new
+                            {
+                                @name = "Username",
+                                @id = "user",
+                                @type = "text",
+                                @class = "un",
+                                @placeholder = "Username",
+                                @maxlength = "50",
+                                @align = "center",
+}
+})
+
+                    </div>
+
+                    <div class="form-group">
+                        @Html.EditorFor(Modal => Modal.Password, new
+                        {
+                            HtmlAttributes = new
+                            {
+                                @name = "Password",
+                                @type = "password",
+                                @class = "pass",
+                                @placeholder = "Password",
+                                @maxlength = "50",
+                                @align = "center",
+
+}
+})
+
+                    </div>
+
+                    <button class="submit" type="submit" align="center" onclick="SubmitDetails">Log in</button>
+
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<script>
+    $(function () {
+
+        $("#formDetails").validate({
+            rules:
+            {
+                Username: {
+                    required: true,
+                    maxlength: 50
+
+                },
+
+                Password: {
+                    required: true,
+                    minlength: 4,
+                    maxlength: 8
+                }
+
+
+            },
+            messages:
+            {
+                Username: {
+                    required: "Name is required",
+                    maxlegth: "Maximum length 50 only"
+                },
+                Password:
+                {
+                    required: "Password is required",
+                    minlength: "Password should have miminum of 4 characters",
+                    maxlength: "Password should have maximum of 8 charaacters"
+                }
+            }
+        });
+    });
+
+    function SubmitDetails() {
+        if ($("#formDetails").valid()) {
+            $("#formDetails").submit();
+        }
+    }
+
+
+</script>

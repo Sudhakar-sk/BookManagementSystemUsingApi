@@ -1,0 +1,139 @@
+﻿@model IEnumerable<BookManagementSystem.Core.Modal.BookDetails>
+@{
+    ViewBag.Title = "ViewBookDetails";
+}
+<link href="~/css/BookDetailList.css" rel="stylesheet" />
+
+@if (TempData["LoginAlert"] != null)
+{
+    <script>
+        alert("@Html.Raw(@TempData["LoginAlert"].ToString())");
+    </script>
+
+}
+@if (TempData["CreateAlert"] != null)
+{
+    <script>
+        alert("@Html.Raw(@TempData["CreateAlert"].ToString())");
+    </script>
+}
+@if (TempData["DeleteAlert"] != null)
+{
+    <script>
+        alert("@Html.Raw(@TempData["DeleteAlert"].ToString())");
+    </script>
+}
+@if (TempData["EditAlert"] != null)
+{
+    <script>
+        alert("@Html.Raw(@TempData["EditAlert"].ToString())");
+    </script>
+}
+<div class="container-fluid">
+
+    <div class="body">
+        <section class="ftco-section">
+
+            <h1 class="text-center mb-4">Book Detail List</h1>
+
+
+            <div class="row">
+                <button class="btn btn-primary btn-sm logout" id="add" onclick="Logout()">Logout </button>
+                <button class="btn btn-primary btn-sm ml-auto" id="add" onclick="Add()"> Add Book </button>
+                </div>
+            <div class="row">
+
+                    <div class="col-md-12">
+
+                        <div class="table-wrap">
+                            <table class="table table-bordered table-striped auto-index">
+
+                                <thead class="table-primari">
+                                    <tr>
+                                        <td>S.No</td>
+                                        <td>BookTitle</td>
+                                        <td>BookAuthor</td>
+                                      
+                                        <td>Price</td>
+                                        <td>Actions</td>
+
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    @if (Model != null)
+                                    {
+
+
+                                        foreach (var items in Model)
+                                        {
+                                            // int i = 0;
+                                            //ViewBag.Sno = i++;
+                                    <tr>
+                                        <td> </td>
+
+                                        <td>@items.BookTitle</td>
+                                        <td>@items.BookAuthors </td>
+
+                                        <td>@items.Price</td>
+
+                                        <td>
+                                            <button class="btn btn-success" type="button" id="@items.BookId" onclick="Edit(this.id)">Edit</button>
+                                            <button class="btn btn-danger" type="button" id="@items.BookId" onclick="Delete(this.id)">delete</button>
+                                        </td>
+                                    </tr>
+                                        }
+
+                                    }
+
+                                    else
+                                    {
+                                        <tr>
+                                            <td colspan="7">No Record Found</td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+           
+        </section>
+    </div>
+</div>
+
+<script>
+    function Add()
+    {
+        window.location.href = "@Url.Action("AddEdit", "Book")";
+    }
+  
+    //var addSerialNumber = function () {
+    //    var i = 0
+    //    $('table tr').each(function (index) {
+    //        $(this).find('td:nth-child(1)').html(index - 1 + 1);
+    //    });
+    //};
+
+
+    function Delete(id)
+    {
+        if (confirm("Are you sure wants to delete?"))
+        {
+            window.location.href = "@Url.Action("DeleteBookDetails", "Book")?BookId=" + id;
+        }
+    }
+
+    function Edit(id)
+    {
+        if (confirm("Are you sure wants to Edit"))
+        {
+            window.location.href = "@Url.Action("AddEdit", "Book")?BookId=" + id;
+        }
+    }
+    function Logout()
+    {
+        window.location.href = "@Url.Action("Logout", "Book")";
+    }
+</script>
