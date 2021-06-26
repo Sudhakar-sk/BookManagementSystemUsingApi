@@ -11,6 +11,97 @@ namespace BookManagementSystem.Resource.Repository
 {
    public class BookRepository: IBookRepository
     {
+
+        #region Login
+        public bool LoginCheck(AdminLogin admin)
+        {
+            var BookDB = new BookmanagementsystemContext();
+            var logindetails = BookDB.admin_Login.Where(x => x.Username == admin.Username && x.password == admin.Password).SingleOrDefault();
+
+            if (logindetails != null)
+            {
+                return true;
+
+            }
+            else
+            {
+                return false;
+            }
+        }
+        #endregion
+
+        #region NameList
+        public IList<AuthorDetails> GetAuthorName()
+        {
+            List<AuthorDetails> NameList = new List<AuthorDetails>();
+            using (var entites = new BookmanagementsystemContext())
+            {
+                var dbAuthorName = entites.author_Name.Where(x => x.Is_Deleted == false).ToList();
+                if (dbAuthorName != null)
+                {
+                    foreach (var dbname in dbAuthorName)
+                    {
+                        AuthorDetails authorName = new AuthorDetails();
+                        authorName.AuthorId = dbname.Author_Id;
+                        authorName.BookAuthor = dbname.Book_Author;
+                        NameList.Add(authorName);
+                    }
+                }
+            }
+            return NameList;
+        }
+        #endregion
+
+        #region Get All Book Details from DB
+        public IEnumerable<BookDetails> GetBookDetails()
+        {
+            IList<BookDetails> bookList = new List<BookDetails>();
+            var bookDB = new BookmanagementsystemContext();
+            bookList = (from book in bookDB.book_Details
+                        join author in bookDB.author_Name
+on
+book.Book_Author equals
+author.Author_Id
+                        where book.Is_Deleted == false && author.Is_Deleted == false
+
+                        select new BookDetails
+                        {
+                            BookId = book.Book_Id,
+                            BookTitle = book.Book_Title,
+                            BookAuthors = author.Book_Author,
+                            Price = book.Price
+
+
+                        }).ToList();
+
+            return bookList;
+        }
+        #endregion
+
+        #region get Book detail by using Book Id
+        public BookDetails GetBookById(int BookId)
+        {
+
+            var BookDB = new BookmanagementsystemContext();
+            var Book = (from books in BookDB.book_Details
+                        join author in BookDB.author_Name
+                        on
+                        books.Book_Author equals author.Author_Id
+                        where books.Book_Id == BookId 
+                        && books.Is_Deleted == false 
+                        && author.Is_Deleted == false
+                        select new BookDetails
+                        {
+                            BookId = books.Book_Id,
+                            BookTitle = books.Book_Title,
+                            BookAuthor = books.Book_Author,
+                            Price = books.Price
+                        }).SingleOrDefault();
+            return Book;
+
+        }
+        #endregion
+
         #region Save Book Details
         public BookDetails SavebookDetails(BookDetails bookDetails)
         {
@@ -55,30 +146,6 @@ namespace BookManagementSystem.Resource.Repository
         }
         #endregion
 
-        #region Get Book Details
-       public IEnumerable<BookDetails> GetBookDetails()
-        {
-            IList<BookDetails> bookList = new List<BookDetails>();
-            var bookDB = new BookmanagementsystemContext();
-            bookList = (from book in bookDB.book_Details join author in bookDB.author_Name 
-                        on
-                         book.Book_Author equals
-                         author.Author_Id where book.Is_Deleted==false && author.Is_Deleted==false
-
-                           select new BookDetails
-                           {
-                               BookId = book.Book_Id,
-                               BookTitle = book.Book_Title,
-                               BookAuthors = author.Book_Author,
-                               Price = book.Price
-     
-
-                           }).ToList();
-
-            return bookList;
-        }
-        #endregion
-
         #region Delete book Details 
 
         public void Deletebook(int bookId)
@@ -94,82 +161,7 @@ namespace BookManagementSystem.Resource.Repository
 
 
         }
-        #endregion
-
-        #region Login
-        public bool LoginCheck(AdminLogin admin)
-        {
-            var BookDB = new BookmanagementsystemContext();
-            var logindetails = BookDB.admin_Login.Where(x => x.Username == admin.Username && x.password == admin.Password).SingleOrDefault();
-
-            if (logindetails != null)
-            {
-                return true;
-
-            }
-            else
-            {
-                return false;
-            }
-        }
-        #endregion
-
-        #region get Book detail by using Book Id
-      
-        public BookDetails GetBookById(int BookId)
-        {
-
-
-            var BookDB = new BookmanagementsystemContext();
-            var Book =(from books in BookDB.book_Details join author in BookDB.author_Name
-                       on books.Book_Author equals author.Author_Id
-                        where books.Book_Id == BookId && books.Is_Deleted == false && author.Is_Deleted == false
-                       select new BookDetails
-                       {
-                           BookId = books.Book_Id,
-                           BookTitle = books.Book_Title,
-                           BookAuthor = books.Book_Author,
-                           Price = books.Price
-
-                       }
-                        
-                        ).SingleOrDefault();
-           
-            //var model = new BookDetails()
-            //{
-            //    BookId = Book.Book_Id,
-            //    BookTitle = Book.Book_Title,
-            //    BookAuthors = Book.Book_Author,
-            //    Price = Book.Price
-             
-            //};
-
-            return Book;
-
-        }
-        #endregion
-
-        #region NameList
-        public IList<AuthorDetails> GetAuthorName()
-        {
-            List<AuthorDetails> NameList = new List<AuthorDetails>();
-            using (var entites = new BookmanagementsystemContext())
-            {
-                var dbAuthorName = entites.author_Name.Where(x => x.Is_Deleted == false).ToList();
-                if (dbAuthorName != null)
-                {
-                    foreach (var dbname in dbAuthorName)
-                    {
-                        AuthorDetails authorName = new AuthorDetails();
-                        authorName.AuthorId = dbname.Author_Id;
-                        authorName.BookAuthor = dbname.Book_Author;
-                        NameList.Add(authorName);
-                    }
-                }
-            }
-            return NameList;
-        }
-        #endregion
+        #endregion       
 
     }
 }

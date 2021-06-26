@@ -12,13 +12,16 @@ namespace BookManagementSystem.Service.Service
 {
    public class BookService: IBookService
     {
+        #region Declaration
         readonly IBookRepository _IBookRepository;
+        #endregion
 
+        #region Constructor
         public BookService(IBookRepository BookRepositories)
         {
             _IBookRepository = BookRepositories;
         }
-
+        #endregion
 
         #region Login
         public bool LoginCheck(AdminLogin admin)
@@ -27,19 +30,28 @@ namespace BookManagementSystem.Service.Service
         }
         #endregion
 
-        #region Get Name List
+        #region Get All Author Name List
         public IList<AuthorDetails> GetAuthorName()
         {
             return _IBookRepository.GetAuthorName();
             
         }
         #endregion
-      
-       public IEnumerable<BookDetails> GetBookDetails()
+
+        #region Get All Book Details
+        public IEnumerable<BookDetails> GetBookDetails()
         {
             return _IBookRepository.GetBookDetails();
         }
+        #endregion
 
+        #region Get Book Details By using Id
+        public BookDetails GetBookById(int bookId)
+        {
+            return _IBookRepository.GetBookById(bookId);
+        }
+
+        #endregion
 
         #region InsertBookDetails
         public void InsertBookDetails(BookDetails book)
@@ -47,6 +59,7 @@ namespace BookManagementSystem.Service.Service
             _IBookRepository.SavebookDetails(book);
         }
         #endregion
+
         #region  UpdateBookDetails
 
         public void UpdateBookDetails(BookDetails book)
@@ -55,6 +68,7 @@ namespace BookManagementSystem.Service.Service
         }
 
         #endregion
+
         #region Deletebook
         public void Deletebook(int bookId)
         {
@@ -62,13 +76,7 @@ namespace BookManagementSystem.Service.Service
         }
         #endregion
 
-        #region Get Book By Id
-        public BookDetails GetBookById(int bookId)
-        {
-            return _IBookRepository.GetBookById(bookId);
-        }
-
-        #endregion
+      
 
     }
 }

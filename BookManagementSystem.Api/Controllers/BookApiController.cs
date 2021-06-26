@@ -12,9 +12,9 @@ namespace BookManagementSystem.Api.Controllers
     [ApiController]
     public class BookApiController : Controller
     {
-
+        #region Declaration
         private readonly IBookService _IBookService;
-
+        #endregion
 
         #region Constructor Injection
         public BookApiController(IBookService bookServices)
@@ -23,7 +23,29 @@ namespace BookManagementSystem.Api.Controllers
         }
         #endregion
 
-        #region Get book
+        #region Login
+        [HttpPost]
+        public ActionResult LoginCheck(AdminLogin admin)
+        {
+            var login = _IBookService.LoginCheck(admin);
+            if (login == true)
+            {
+                return Ok(true);
+            }
+            return NotFound();
+        }
+        #endregion
+
+        #region Get Author Name List
+        [HttpGet]
+        public IActionResult GetAuthorName()
+        {
+            var name = _IBookService.GetAuthorName();
+            return Ok(name);
+        }
+        #endregion
+
+        #region Get All BookDetails
         [HttpGet]
         public IActionResult BookDetailList()
         {
@@ -32,6 +54,7 @@ namespace BookManagementSystem.Api.Controllers
         }
         #endregion
 
+        #region Get book By using Id
         [HttpGet]
         public ActionResult GetBookById(int bookId)
         {
@@ -40,7 +63,7 @@ namespace BookManagementSystem.Api.Controllers
             book.AuthorList = _IBookService.GetAuthorName();
             return Ok(book);
         }
-
+        #endregion
 
         #region Insert Book[Post]
         [HttpPost]
@@ -50,7 +73,6 @@ namespace BookManagementSystem.Api.Controllers
         }
         #endregion
 
-
         #region Update Book[Put]
         [HttpPut]
         public void UpdateBookDetails(BookDetails book)
@@ -58,7 +80,6 @@ namespace BookManagementSystem.Api.Controllers
             _IBookService.UpdateBookDetails(book);
         }
         #endregion
-
 
         #region Delete Book
 
@@ -68,27 +89,7 @@ namespace BookManagementSystem.Api.Controllers
             _IBookService.Deletebook(bookId);
         }
         #endregion
+ 
 
-
-
-        #region Login
-        [HttpPost]
-        public ActionResult LoginCheck(AdminLogin admin)
-        {
-           var login=  _IBookService.LoginCheck(admin);
-            if (login == true)
-            {
-                return Ok(true);
-             }
-            return NotFound();
-        }
-        #endregion
-
-        [HttpGet]
-        public IActionResult GetAuthorName()
-        {
-            var name = _IBookService.GetAuthorName();
-            return Ok(name);
-        }
     }
 }

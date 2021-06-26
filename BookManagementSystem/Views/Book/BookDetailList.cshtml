@@ -2,8 +2,14 @@
 @{
     ViewBag.Title = "ViewBookDetails";
 }
+
 <link href="~/css/BookDetailList.css" rel="stylesheet" />
 
+
+@section Scripts
+    {
+    <partial name="_ValidationScriptsPartial" />
+}
 @if (TempData["LoginAlert"] != null)
 {
     <script>
@@ -29,6 +35,7 @@
         alert("@Html.Raw(@TempData["EditAlert"].ToString())");
     </script>
 }
+
 <div class="container-fluid">
 
     <div class="body">
@@ -40,81 +47,84 @@
             <div class="row">
                 <button class="btn btn-primary btn-sm logout" id="add" onclick="Logout()">Logout </button>
                 <button class="btn btn-primary btn-sm ml-auto" id="add" onclick="Add()"> Add Book </button>
-                </div>
+            </div>
             <div class="row">
 
-                    <div class="col-md-12">
+                <div class="col-md-12">
 
-                        <div class="table-wrap">
-                            <table class="table table-bordered table-striped auto-index">
+                    <div class="table-wrap">
+                        <table class="table table-bordered table-striped auto-index" id="Example">
 
-                                <thead class="table-primari">
-                                    <tr>
-                                        <td>S.No</td>
-                                        <td>BookTitle</td>
-                                        <td>BookAuthor</td>
-                                      
-                                        <td>Price</td>
-                                        <td>Actions</td>
+                            <thead class="table-primari">
+                                <tr>
+                                    <td>S.No</td>
+                                    <td>BookTitle</td>
+                                    <td>BookAuthor</td>
 
-                                    </tr>
-                                </thead>
+                                    <td>Price</td>
+                                    <td>Actions</td>
 
-                                <tbody>
-                                    @if (Model != null)
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @if (Model != null)
+                                {
+
+
+                                    foreach (var items in Model)
                                     {
+                                        
+                                   <tr>
+                                       <td>@*@items.BookId*@</td>
 
+                                    <td>@items.BookTitle</td>
+                                    <td>@items.BookAuthors </td>
 
-                                        foreach (var items in Model)
-                                        {
-                                            // int i = 0;
-                                            //ViewBag.Sno = i++;
-                                    <tr>
-                                        <td> </td>
+                                    <td>@items.Price</td>
 
-                                        <td>@items.BookTitle</td>
-                                        <td>@items.BookAuthors </td>
-
-                                        <td>@items.Price</td>
-
-                                        <td>
-                                            <button class="btn btn-success" type="button" id="@items.BookId" onclick="Edit(this.id)">Edit</button>
-                                            <button class="btn btn-danger" type="button" id="@items.BookId" onclick="Delete(this.id)">delete</button>
-                                        </td>
-                                    </tr>
-                                        }
-
+                                    <td>
+                                        <button class="btn btn-success" type="button" id="@items.BookId" onclick="Edit(this.id)">Edit</button>
+                                        <button class="btn btn-danger" type="button" id="@items.BookId" onclick="Delete(this.id)">delete</button>
+                                    </td>
+                                </tr>
                                     }
 
-                                    else
-                                    {
-                                        <tr>
-                                            <td colspan="7">No Record Found</td>
-                                        </tr>
-                                    }
+                                }
 
-                                </tbody>
-                            </table>
-                        </div>
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="7">No Record Found</td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-           
+            </div>
+
         </section>
     </div>
 </div>
 
 <script>
+
+
+
+
+
+
+
+
+
     function Add()
     {
         window.location.href = "@Url.Action("AddEdit", "Book")";
     }
-  
-    //var addSerialNumber = function () {
-    //    var i = 0
-    //    $('table tr').each(function (index) {
-    //        $(this).find('td:nth-child(1)').html(index - 1 + 1);
-    //    });
-    //};
+
+
 
 
     function Delete(id)
