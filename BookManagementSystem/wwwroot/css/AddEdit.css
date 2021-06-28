@@ -1,0 +1,30 @@
+﻿.error {
+    color: red;
+}
+
+.bg-design2 {
+    background-color: #FFFFFF;
+    /* width: 400px; */
+    /* height: 356px; */
+    /* margin: 7em auto; */
+    border-radius: 1.5em;
+    box-shadow: 0px 11px 35px 2px rgb(0 0 0 / 14%);
+}
+
+.bg-design1 {
+    background-color: #F3EBF6;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.btn-align {
+    text-align: center;
+}
+
+.log-title {
+    text-align: center;
+    color: #0026ff;
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: bold;
+    font-size: 23px;
+    padding-top: 40px;
+}

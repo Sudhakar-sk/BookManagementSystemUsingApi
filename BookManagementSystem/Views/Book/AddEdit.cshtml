@@ -2,50 +2,20 @@
 @{
     ViewBag.Title = "AddEdit";
 }
-@*<link href="~/css/AddEdit.css" rel="stylesheet" />*@
-<script src="~/js/site.js"></script>
+<link href="~/css/AddEdit.css" rel="stylesheet" />
+
+
 <script src="~/lib/jquery/dist/jquery.js"></script>
 @section Scripts
     {
     <partial name="_ValidationScriptsPartial" />
-}
-<style>
-    .error {
-        color: red;
     }
-    .bg-design2 {
-        background-color: #FFFFFF;
-        /* width: 400px; */
-        /* height: 356px; */
-        /* margin: 7em auto; */
-        border-radius: 1.5em;
-        box-shadow: 0px 11px 35px 2px rgb(0 0 0 / 14%);
-    }
-    .bg-design1 {
-        background-color: #F3EBF6;
-        font-family: 'Ubuntu', sans-serif;
-    }
-    .btn-align{
-        text-align:center;
-    }
-    .log-title
-    {
-        text-align: center;
-        color: #0026ff;
-        font-family: 'Ubuntu', sans-serif;
-        font-weight: bold;
-        font-size: 23px;
-        padding-top: 40px;
-    }
-</style>
 
 
 
 <div class="container bg-design1">
-   
+
     <button class="btn btn-primary btn-sm add float-right" onclick="BookList()">BookList</button>
-
-
 
     <div class="row">
         <div class=" col-lg-4 offset-lg-5 bg-design2">
@@ -55,27 +25,27 @@
                 @Html.HiddenFor(model => model.BookId)
 
                 @*@if (Model != null)
-                {*@
-                    <div class="form-group">
-                   <label>BookAuthor</label>
-                   <div>
-                       @*<div class="form-group col-lg-2 col-mg-2">@Html.DropDownListFor(Modal => Modal.BookAuthor, (IEnumerable<SelectListItem>)ViewBag.author, "-Select Author-", new { @class = "form-control" })</div>*@
-                       @Html.DropDownList("BookAuthor", new SelectList(@Model.AuthorList, "AuthorId", "BookAuthor"), "select-Author", new { @class = "form-control" })
-                   </div>
-                 </div>
+                    {*@
+                <div class="form-group">
+                    <label>BookAuthor</label>
+                    <div>
+                        @*<div class="form-group col-lg-2 col-mg-2">@Html.DropDownListFor(Modal => Modal.BookAuthor, (IEnumerable<SelectListItem>)ViewBag.author, "-Select Author-", new { @class = "form-control" })</div>*@
+                        @Html.DropDownList("BookAuthor", new SelectList(@Model.AuthorList, "AuthorId", "BookAuthor"), "Select Author", new { @class = "form-control" })
+                    </div>
+                </div>
                 @*}*@
 
 
 
                 @*<div class="form-group">
-                    <label>BookAuthor</label>
-                    @Html.EditorFor(Modal => Modal.BookAuthor, new { HtmlAttributes = new { @type = "text", @class = "input form-control", @maxlength = "150", @placeholder = "BookAuthor Name" } })
+                        <label>BookAuthor</label>
+                        @Html.EditorFor(Modal => Modal.BookAuthor, new { HtmlAttributes = new { @type = "text", @class = "input form-control", @maxlength = "150", @placeholder = "BookAuthor Name" } })
 
-                </div>*@
+                    </div>*@
 
                 <div class="form-group">
                     <label>BookTitle</label>
-                    @Html.EditorFor(Modal => Modal.BookTitle, new { HtmlAttributes = new { @type = "text", @class = "input form-control", @maxlength = "150", @placeholder = "BookTitle Name" } })
+                    @Html.EditorFor(Modal => Modal.BookTitle, new { HtmlAttributes = new { @type = "text", @class = "input form-control", @maxlength = "150", @placeholder = "Book Title " } })
 
                 </div>
 
@@ -109,6 +79,7 @@
     </div>
 </div>
 
+<script src="~/js/AddEdit.js"></script>
 
 <script>
 
@@ -125,78 +96,5 @@
         }
     }
 
-    function Reset()
-    {
-        $("#BookTitle").val("");
-        $("#BookAuthor").val("");
-        $("#Price").val("");
-    }
-
-    $(function()
-    {
-        if ($("#BookId").val() == 0)
-        {
-            $("#BookTitle").val("");
-            $("#BookAuthor").val("");
-            $("#Price").val("");       
-        }
-    });
-    $(function () {
-
-        var form = $('#formDetails').get(0);
-        $.removeData(form, 'validator');
-        validator = $('#formDetails').validate({
-            rules:
-            {
-                BookTitle:
-                {
-                    required:true,
-                    maxlength: 150
-
-                },
-
-                BookAuthor:
-                {
-                    required: true,
-                    maxlength: 100,
-
-                },
-                Price:
-                {
-                    required: true,
-                    maxlength: 6,
-                },
-
-            },
-            messages:
-            {
-
-                BookTitle:
-                {
-                    required: " BookTitle is required",
-                    maxlength: " BookTitle should be 150 charcter",
-                  
-                },
-                BookAuthor:
-                {
-                    required: " BookAuthor is required",
-                    maxlength: " BookAuthor should be 100 charcter",
-                  
-                },
-                Price:
-                {
-                    required: "Price is required",
-                    maxlength: "Price should be 6 digits",                 
-                }
-            }
-        });
-    });
-
-    function SubmitDetails() {
-
-        if ($("#formDetails").valid())
-        {
-            $("#formDetails").submit();
-        }
-    }
+   
 </script>

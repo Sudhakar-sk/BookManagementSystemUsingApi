@@ -9,7 +9,8 @@
 @section Scripts
     {
     <partial name="_ValidationScriptsPartial" />
-}
+    }
+
 @if (TempData["LoginAlert"] != null)
 {
     <script>
@@ -71,12 +72,12 @@
                                 @if (Model != null)
                                 {
 
-
+                                    
                                     foreach (var items in Model)
                                     {
                                         
                                    <tr>
-                                       <td>@*@items.BookId*@</td>
+                                     <td>@items.Index</td>
 
                                     <td>@items.BookTitle</td>
                                     <td>@items.BookAuthors </td>
@@ -89,7 +90,7 @@
                                     </td>
                                 </tr>
                                     }
-
+                            
                                 }
 
                                 else
@@ -111,21 +112,10 @@
 
 <script>
 
-
-
-
-
-
-
-
-
     function Add()
     {
         window.location.href = "@Url.Action("AddEdit", "Book")";
     }
-
-
-
 
     function Delete(id)
     {

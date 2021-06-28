@@ -57,23 +57,48 @@ namespace BookManagementSystem.Resource.Repository
         {
             IList<BookDetails> bookList = new List<BookDetails>();
             var bookDB = new BookmanagementsystemContext();
-            bookList = (from book in bookDB.book_Details
-                        join author in bookDB.author_Name
-on
-book.Book_Author equals
-author.Author_Id
-                        where book.Is_Deleted == false && author.Is_Deleted == false
+            //bookList = (from book in bookDB.book_Details
+            //            join author in bookDB.author_Name
+            //            on
+            //            book.Book_Author equals
+            //            author.Author_Id
+            //            where book.Is_Deleted == false && author.Is_Deleted == false
 
-                        select new BookDetails
-                        {
-                            BookId = book.Book_Id,
+            //            select new BookDetails
+            //            {
+            //                BookId = book.Book_Id,
+            //                BookTitle = book.Book_Title,
+            //                BookAuthors = author.Book_Author,
+            //                Price = book.Price
+
+
+            //            }).ToList();
+            var books = (from book in bookDB.book_Details
+                        join author in bookDB.author_Name
+                         on
+                        book.Book_Author equals author.Author_Id
+                        where book.Is_Deleted == false && author.Is_Deleted == false
+                        select new  {
+                            
+                            bookId = book.Book_Id,
                             BookTitle = book.Book_Title,
                             BookAuthors = author.Book_Author,
                             Price = book.Price
-
-
                         }).ToList();
-
+            int i = 1;
+            foreach(var book in books)
+            {
+                bookList.Add(new BookDetails()
+                {
+                    Index = i++,
+                    BookId = book.bookId,
+                    BookTitle = book.BookTitle,
+                    BookAuthors = book.BookAuthors,
+                    Price = book.Price
+                }); 
+               
+                
+            }
             return bookList;
         }
         #endregion

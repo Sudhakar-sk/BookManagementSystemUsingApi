@@ -11,11 +11,9 @@ namespace BookManagementSystem.Core.Modal
     {
         [Key]
         public int LoginId { get; set; }
-        [Required]
-        [StringLength(50)]
+        [Required(ErrorMessage = "Please enter UserName.")]    
         public string Username { get; set; }
-        [Required]
-        [StringLength(50)]
+        [Required(ErrorMessage = "Please enter Password.")]      
         public string Password { get; set; }
     }
 }

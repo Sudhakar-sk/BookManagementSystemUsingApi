@@ -132,7 +132,7 @@ namespace BookManagementSystem.Web.Controllers
 
         #endregion
 
-        #region AddEdit [Get Logic]
+        #region AddEdit [Get Logic] [View Page]
       
         public ActionResult AddEdit(int bookId)
         {

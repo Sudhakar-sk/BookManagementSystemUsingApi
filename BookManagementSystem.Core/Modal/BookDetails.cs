@@ -12,17 +12,19 @@ namespace BookManagementSystem.Core.Modal
     {
         [Key]
         public int BookId { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Please enter Book Title.")]
         
         public string BookTitle { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Please Select Author name.")]
       
         public int BookAuthor { get; set; }
 
         public string BookAuthors { get; set; }
-
+        [Required(ErrorMessage = "Please enter Book Price.")]
         public decimal Price { get; set; }
 
         public IList<AuthorDetails> AuthorList { get; set; }
+
+        public int Index{ get; set; }
     }
 }
